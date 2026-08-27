@@ -1,0 +1,5 @@
+# robots.txt for ReimbursePDF Optimizer
+User-agent: *
+Allow: /
+
+Sitemap: https://nagarajmbhat.github.io/reimbursement-pdf-optimizer/sitemap.xml

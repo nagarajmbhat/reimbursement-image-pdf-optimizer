@@ -1,0 +1,11 @@
+{
+  "name": "reimbursement-image-pdf-optimizer",
+  "version": "1.0.0",
+  "description": "Client-side image optimizer, receipt watermarker, and auto-splitting 5MB PDF builder.",
+  "scripts": {
+    "start": "npx -y serve . -l 3000"
+  },
+  "keywords": ["receipts", "heic", "pdf", "reimbursement", "watermark", "compression"],
+  "author": "",
+  "license": "MIT"
+}
