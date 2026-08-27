@@ -43,23 +43,6 @@ A lightweight, modern, 100% client-side web application designed to prepare rece
 ### Option 1: Zero Installation (Direct Browser Open)
 Double click [`index.html`](./index.html) to open in Chrome, Edge, Safari, or Firefox.
 
-### Option 2: Host as Free Static Site (GitHub Pages / Vercel / Netlify)
-Since all processing is 100% client-side (no backend required), you can host this repository anywhere as a static site:
-1. Push to GitHub:
-   ```bash
-   git add .
-   git commit -m "Deploy Reimbursement PDF Optimizer"
-   git push origin main
-   ```
-2. In GitHub: Go to **Settings** ➔ **Pages** ➔ select branch **`main`** and **`/ (root)`** ➔ click **Save**.
-3. Live URL will be generated instantly.
-
-### Option 3: Local HTTP Server
-```bash
-python3 -m http.server 8088
-```
-Then visit [http://localhost:8088](http://localhost:8088).
-
 ## 🏢 Supported Reimbursement Categories
 
 Pre-configured presets and high-contrast stamps for all major corporate & MNC employee expense policies:
