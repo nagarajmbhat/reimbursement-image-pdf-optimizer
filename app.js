@@ -17,7 +17,7 @@ const elements = {
   dropzone: document.getElementById('dropzone'),
   fileInput: document.getElementById('fileInput'),
   browseFilesBtn: document.getElementById('browseFilesBtn'),
-  
+
   // Settings Inputs
   watermarkTextInput: document.getElementById('watermarkTextInput'),
   charCount: document.getElementById('charCount'),
@@ -30,11 +30,11 @@ const elements = {
   maxDimValue: document.getElementById('maxDimValue'),
   pdfLimitSlider: document.getElementById('pdfLimitSlider'),
   pdfLimitValue: document.getElementById('pdfLimitValue'),
-  
+
   // Mini Preview Elements
   previewBadgeDisplay: document.getElementById('previewBadgeDisplay'),
   previewBadgeText: document.getElementById('previewBadgeText'),
-  
+
   // Queue & Action Elements
   queueCard: document.getElementById('queueCard'),
   queueCount: document.getElementById('queueCount'),
@@ -44,20 +44,20 @@ const elements = {
   imageGrid: document.getElementById('imageGrid'),
   clearQueueBtn: document.getElementById('clearQueueBtn'),
   processBtn: document.getElementById('processBtn'),
-  
+
   // Progress Elements
   progressCard: document.getElementById('progressCard'),
   progressTitle: document.getElementById('progressTitle'),
   progressDesc: document.getElementById('progressDesc'),
   progressPercent: document.getElementById('progressPercent'),
   progressBarFill: document.getElementById('progressBarFill'),
-  
+
   // Results Elements
   resultsCard: document.getElementById('resultsCard'),
   resultsSummary: document.getElementById('resultsSummary'),
   pdfPartsGrid: document.getElementById('pdfPartsGrid'),
   downloadZipBtn: document.getElementById('downloadZipBtn'),
-  
+
   // Modal Elements
   previewModal: document.getElementById('previewModal'),
   modalPreviewImg: document.getElementById('modalPreviewImg'),
@@ -219,7 +219,7 @@ function setupEventListeners() {
         const today = new Date();
         textToInsert = today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       }
-      
+
       const currentVal = elements.watermarkTextInput.value;
       elements.watermarkTextInput.value = currentVal ? `${currentVal} | ${textToInsert}` : textToInsert;
       updateLiveStampPreview();
@@ -258,7 +258,7 @@ function updateLiveStampPreview() {
 }
 
 // ─── Visit & Used Counters ────────────────────────────────────────────
-const GOATCOUNTER_CODE = 'YOUR_GOATCOUNTER_CODE';
+const GOATCOUNTER_CODE = 'reimbursement-image-pdf-optimizer';
 const USED_COUNT_KEY = 'reimburse_pdf_used_count';
 
 // 1. Visited counter (GoatCounter public counter API)
@@ -320,7 +320,7 @@ function incrementUsedCount() {
     const next = getUsedCount() + 1;
     localStorage.setItem(USED_COUNT_KEY, next.toString());
     updateUsedCountDisplay();
-  } catch (e) {}
+  } catch (e) { }
 }
 
 // Initialize Used Count display on load (shows "—" if 0)
@@ -343,12 +343,12 @@ function formatBytes(bytes) {
  */
 function handleFilesSelected(fileList) {
   const newFiles = Array.from(fileList);
-  
+
   newFiles.forEach(file => {
-    const isHeic = file.name.toLowerCase().endsWith('.heic') || 
-                   file.name.toLowerCase().endsWith('.heif') || 
-                   file.type === 'image/heic' || 
-                   file.type === 'image/heif';
+    const isHeic = file.name.toLowerCase().endsWith('.heic') ||
+      file.name.toLowerCase().endsWith('.heif') ||
+      file.type === 'image/heic' ||
+      file.type === 'image/heif';
 
     const fileItem = {
       id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
@@ -371,7 +371,7 @@ function handleFilesSelected(fileList) {
  */
 function renderQueue() {
   elements.imageGrid.innerHTML = '';
-  
+
   if (state.filesQueue.length === 0) {
     elements.queueEmptyState.style.display = 'block';
     elements.queueActions.style.display = 'none';
@@ -560,7 +560,7 @@ async function processAndStampImage(queueItem) {
 
   // 6. Compress to JPEG Blob
   const quality = (parseInt(elements.qualitySlider.value, 10) || 82) / 100;
-  
+
   const compressedBlob = await new Promise(resolve => {
     canvas.toBlob(blob => resolve(blob), 'image/jpeg', quality);
   });
@@ -758,7 +758,7 @@ async function startProcessingPipeline() {
 
         // Generate temporary blob to test size
         const currentBlob = currentDoc.output('blob');
-        
+
         if (currentBlob.size > maxPdfLimitBytes && currentPartImages.length > 1) {
           // Exceeded limit: Remove last added page from current doc and seal it
           currentPartImages.pop(); // Remove the one that broke the limit
@@ -863,7 +863,7 @@ function savePdfPart(partNumber, blob, pageCount) {
   const baseName = getCleanPdfBaseName();
   const name = `${baseName}_Part${partNumber}.pdf`;
   const blobUrl = URL.createObjectURL(blob);
-  
+
   state.generatedPdfParts.push({
     partNumber,
     name,
