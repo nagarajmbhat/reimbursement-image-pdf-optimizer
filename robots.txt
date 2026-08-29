@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nagarajmbhat.github.io/reimbursement-pdf-optimizer/sitemap.xml
+Sitemap: https://nagarajmbhat.github.io/reimbursement-image-pdf-optimizer/sitemap.xml

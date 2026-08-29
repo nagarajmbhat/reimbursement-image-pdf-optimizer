@@ -229,7 +229,10 @@ function setupEventListeners() {
 
   // Queue actions
   elements.clearQueueBtn.addEventListener('click', clearQueue);
-  elements.processBtn.addEventListener('click', startProcessingPipeline);
+  elements.processBtn.addEventListener('click', () => {
+    incrementUsedCount();
+    startProcessingPipeline();
+  });
   elements.downloadZipBtn.addEventListener('click', downloadAllAsZip);
 
   // Modal close handlers
@@ -253,6 +256,76 @@ function updateLiveStampPreview() {
   elements.previewBadgeDisplay.classList.add(`badge-style-${elements.watermarkStyle.value}`);
   elements.previewBadgeDisplay.classList.add(`pos-${elements.watermarkPosition.value}`);
 }
+
+// ─── Visit & Used Counters ────────────────────────────────────────────
+const GOATCOUNTER_CODE = 'YOUR_GOATCOUNTER_CODE';
+const USED_COUNT_KEY = 'reimburse_pdf_used_count';
+
+// 1. Visited counter (GoatCounter public counter API)
+if (GOATCOUNTER_CODE && GOATCOUNTER_CODE !== 'YOUR_GOATCOUNTER_CODE') {
+  const path = encodeURIComponent(location.pathname || '/');
+  fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter/${path}.json`)
+    .then(r => {
+      if (!r.ok) throw new Error('Network response not ok');
+      return r.json();
+    })
+    .then(data => {
+      const el = document.getElementById('visitCount');
+      if (el && data && data.count) {
+        const num = parseInt(String(data.count).replace(/,/g, ''), 10);
+        el.textContent = isNaN(num) ? data.count : num.toLocaleString('en-IN');
+      }
+    })
+    .catch(() => {
+      // Fallback to root / index.html path if pathname-specific counter returns error
+      fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter//index.html.json`)
+        .then(r => r.json())
+        .then(data => {
+          const el = document.getElementById('visitCount');
+          if (el && data && data.count) {
+            const num = parseInt(String(data.count).replace(/,/g, ''), 10);
+            el.textContent = isNaN(num) ? data.count : num.toLocaleString('en-IN');
+          }
+        })
+        .catch(() => {
+          const wrap = document.getElementById('visitCounterWrap');
+          if (wrap) wrap.style.display = 'none';
+        });
+    });
+} else {
+  // If GoatCounter is not yet configured, hide the visited counter gracefully
+  const wrap = document.getElementById('visitCounterWrap');
+  if (wrap) wrap.style.display = 'none';
+}
+
+// 2. Used counter (localStorage, increments only on main action button click)
+function getUsedCount() {
+  try {
+    return parseInt(localStorage.getItem(USED_COUNT_KEY) || '0', 10);
+  } catch (e) {
+    return 0;
+  }
+}
+
+function updateUsedCountDisplay() {
+  const count = getUsedCount();
+  const el = document.getElementById('usedCount');
+  if (el) {
+    el.textContent = count > 0 ? count.toLocaleString('en-IN') : '—';
+  }
+}
+
+function incrementUsedCount() {
+  try {
+    const next = getUsedCount() + 1;
+    localStorage.setItem(USED_COUNT_KEY, next.toString());
+    updateUsedCountDisplay();
+  } catch (e) {}
+}
+
+// Initialize Used Count display on load (shows "—" if 0)
+updateUsedCountDisplay();
+
 
 /**
  * Format bytes to readable string

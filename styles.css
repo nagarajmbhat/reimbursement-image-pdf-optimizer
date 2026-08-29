@@ -187,6 +187,30 @@ body {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.header-counters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .hidden.sm\:flex {
+    display: none !important;
+  }
+}
+
+.badge-counter {
+  color: #cbd5e1;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 500;
+}
+
+.badge-counter span {
+  font-weight: 700;
+  color: #f8fafc;
+}
+
 .badge-free {
   color: #34d399;
   border-color: rgba(52, 211, 153, 0.4);
